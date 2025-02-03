@@ -1,0 +1,33 @@
+﻿@using GestionCegepWeb.Models
+<h3>Liste des Cégep(s) (@ViewBag.ListeCegeps.Count) </h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th>Province</th>
+            <th>Code Postal</th>
+            <th>Téléphone</th>
+            <th>Courriel</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (CegepDTO cegep in ViewBag.ListeCegeps)
+        {
+            <tr>
+                <td>@cegep.Nom</td>
+                <td>@cegep.Adresse</td>
+                <td>@cegep.Ville</td>
+                <td>@cegep.Province</td>
+                <td>@cegep.CodePostal</td>
+                <td>@cegep.Telephone</td>
+                <td>@cegep.Courriel</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
