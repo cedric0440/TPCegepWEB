@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TPCegepWEB.Controllers
 {
-    public class HomeController : Controller
+    public class CegepController : Controller
     {
       
         public IActionResult Index()
