@@ -1,7 +1,8 @@
 ﻿@using GestionCegepWeb.Models
 @{
     var cegeps = ViewBag.ListeCegeps as List<CegepDTO>;
-    var departements = ViewBag.Departements as List<DepartementDTO>;
+    var departements = ViewBag.ListeDepartements as List<DepartementDTO> ?? new List<DepartementDTO>();
+
 }
 
 <h3>Sélectionner un Cégep :</h3>
@@ -17,8 +18,10 @@
     </select>
 </form>
 
-<h3>Liste des département(s) (@departements.Count) pour <b>@ViewBag.CegepSelectionne</b> :</h3>
-
+<br />
+<br />
+<h3>Liste des département(s) (@departements.Count) :</h3>
+<br />
 <table class="table">
     <thead>
         <tr>
@@ -38,3 +41,4 @@
         }
     </tbody>
 </table>
+

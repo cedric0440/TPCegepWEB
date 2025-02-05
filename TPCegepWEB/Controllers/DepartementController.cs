@@ -8,29 +8,37 @@ namespace TPCegepWEB.Controllers
 {
     public class DepartementController : Controller
     {
-      
-        public IActionResult Index([FromQuery] string nomCegep)
+        [Route("Departements")]
+        [Route("Departements/Index")]
+        [HttpGet]
+        public IActionResult Index(string? cegepId)
         {
-            // Récupération de la liste des cégeps pour affichage
-            ViewBag.ListeCegeps = CegepControleur.Instance.ObtenirListeCegep();
-
-            if (!string.IsNullOrEmpty(nomCegep))
+            try
             {
-                // Récupération des départements du cégep sélectionné
-                ViewBag.Departements = DepartementRepository.Instance.ObtenirListeDepartement(nomCegep);
+                var listeCegeps = CegepControleur.Instance.ObtenirListeCegep();
+                ViewBag.ListeCegeps = listeCegeps;
 
-                // Récupération du cégep sélectionné
-                var cegepDTO = CegepRepository.Instance.ObtenirCegep(nomCegep);
-                ViewBag.CegepSelectionne = cegepDTO != null ? cegepDTO.Nom : "Inconnu";
+                if (listeCegeps.Count > 0)
+                {
+                    // Utilise le cégep sélectionné ou le premier par défaut
+                    string nomCegep = cegepId ?? listeCegeps[0].Nom;
+                    ViewBag.CegepSelectionne = nomCegep;
+                    ViewBag.ListeDepartements = CegepControleur.Instance.ObtenirListeDepartement(nomCegep);
+                    return View();
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Aucun cégep n'est disponible.";
+                    ViewBag.ListeDepartements = new List<DepartementDTO>();
+                    return View();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Affichage de tous les départements si aucun cégep n'est sélectionné
-                ViewBag.Departements = DepartementRepository.Instance.ObtenirListeDepartement(null);
-                ViewBag.CegepSelectionne = "Tous les cégeps";
+                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.ListeDepartements = new List<DepartementDTO>();
+                return View();
             }
-
-            return View();
         }
     }
 }
