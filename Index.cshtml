@@ -1,8 +1,10 @@
-﻿@using GestionCegepWeb.Models
+
+<!-- saved from url=(0090)https://rdl.moodle.decclic.qc.ca/pluginfile.php/201280/mod_resource/content/0/Index.cshtml -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>@using GestionCegepWeb.Models
 
 @if (ViewBag.MessageErreur != null)
 {
-    <br />
+    <br>
     <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
 }
 else
@@ -17,7 +19,7 @@ else
             {
                 if (leCegep.Nom.Equals(cegep.Nom))
                 {
-                    <option value="@leCegep.Nom" selected>@leCegep.Nom</option>
+                    <option value="@leCegep.Nom" selected="">@leCegep.Nom</option>
                 }
                 else
                 {
@@ -25,14 +27,14 @@ else
                 }
             }
         </select>
-        <br />
+        <br>
         <label>Sélectionner un département :</label>
         <select name="nomDepartement" onchange="submit();">
             @foreach (var leDepartement in ViewBag.ListeDepartements)
             {
                 if (leDepartement.Nom.Equals(departement.Nom))
                 {
-                    <option value="@leDepartement.Nom" selected>@leDepartement.Nom</option>
+                    <option value="@leDepartement.Nom" selected="">@leDepartement.Nom</option>
                 }
                 else
                 {
@@ -41,11 +43,16 @@ else
             }
         </select>
     </form>
-    <br />
+    <br>
     <h3>Liste des enseignants(s) (@ViewBag.ListeEnseignants.Length enseignant(s)) :</h3>
-    <br />
+    <br>
+    
+        @foreach (EnseignantDTO enseignant in ViewBag.ListeEnseignants)
+        {
+            
+        }
     <table>
-        <tr>
+        <tbody><tr>
             <th>No d'employé</th>
             <th>Nom</th>
             <th>Prénom</th>
@@ -55,10 +62,7 @@ else
             <th>Code postal</th>
             <th>Téléphone</th>
             <th>Courriel</th>
-        </tr>
-        @foreach (EnseignantDTO enseignant in ViewBag.ListeEnseignants)
-        {
-            <tr>
+        </tr><tr>
                 <td>@enseignant.NoEmploye</td>
                 <td>@enseignant.Nom</td>
                 <td>@enseignant.Prenom</td>
@@ -68,8 +72,6 @@ else
                 <td>@enseignant.CodePostal</td>
                 <td>@enseignant.Telephone</td>
                 <td>@enseignant.Courriel</td>
-            </tr>
-        }
-    </table>
+            </tr></tbody></table>
 
-}
+}</body></html>

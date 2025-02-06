@@ -13,6 +13,7 @@ public sealed class Test1
     public void TestMethod1()
     {
         CegepController controleur = new CegepController();
+        DepartementController controller = new DepartementController(); 
         ViewResult viewResult = (ViewResult)controleur.Index();
 
         List<CegepDTO> list = (List<CegepDTO>)viewResult.ViewData["ListeCegeps"];
@@ -49,6 +50,61 @@ public sealed class Test1
             Assert.IsNotNull(list);
             Assert.AreEqual(5, list.Count); // Aucun cégep ne devrait être trouvé.
         }
+
+        [TestMethod]
+        public void Test_BonCegep_BonDepart()
+        {
+            // Arrange
+            string cegepNom = "Cegep Exemple 1";
+            string departementNom = "Informatique";
+            DepartementController controller = new DepartementController();
+
+            // Act
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom);
+            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
+
+            // Assert
+            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
+            Assert.IsTrue(departements.Exists(d => d.Nom == departementNom), "Le département 'Informatique' doit exister pour ce cégep.");
+        }
+
+        [TestMethod]
+        public void Test_BonCegep_MauvaisDepart()
+        {
+            // Arrange
+            string cegepNom = "Cegep Exemple 1";
+            string departementNom = "Astronomie"; // Ce département n'existe pas
+            DepartementController controller = new DepartementController();
+
+
+            // Act
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom);
+            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
+
+            // Assert
+            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
+            Assert.IsFalse(departements.Exists(d => d.Nom == departementNom), "Le département Astronomie ne devrait pas exister dans ce cégep.");
+        }
+
+        [TestMethod]
+        public void Test_MauvaisCegep_MauvaisDepart()
+        {
+            // Arrange
+            string cegepNom = "Cégep Inexistant";
+            string departementNom = "Mathématiques";
+            DepartementController controller = new DepartementController();
+
+            // Act
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom);
+            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
+
+            // Assert
+            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
+            Assert.AreEqual(0, departements.Count, "Si le cégep n'existe pas, il ne doit pas y avoir de départements listés.");
+        }
+
+
+
     }
 
 }
