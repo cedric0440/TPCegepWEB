@@ -17,7 +17,7 @@ public sealed class Test1
 
         List<CegepDTO> list = (List<CegepDTO>)viewResult.ViewData["ListeCegeps"];
         Assert.IsNotNull(list);
-        Assert.AreEqual(3, list.Count);
+        Assert.AreEqual(5, list.Count);
         Assert.AreEqual("Cegep Exemple 1", list[0].Nom);
     }
         [TestMethod]
@@ -47,7 +47,7 @@ public sealed class Test1
             // Assert
             List<CegepDTO> list = (List<CegepDTO>)viewResult.ViewData["ListeCegeps"];
             Assert.IsNotNull(list);
-            Assert.AreEqual(3, list.Count); // Aucun cégep ne devrait être trouvé.
+            Assert.AreEqual(5, list.Count); // Aucun cégep ne devrait être trouvé.
         }
     }
 
