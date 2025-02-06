@@ -27,7 +27,7 @@ namespace TPCegepWEB.Controllers
                 ViewBag.Cegep = CegepControleur.Instance.ObtenirCegep(nomCegep);
                 ViewBag.ListeDepartements = CegepControleur.Instance.ObtenirListeDepartement(nomCegep);
                 ViewBag.Departement = CegepControleur.Instance.ObtenirDepartement(nomCegep, nomDepartement);
-                ViewBag.ListeCours = CegepControleur.Instance.ObtenirListeCours(nomCegep, nomDepartement).ToArray();
+                ViewBag.ListeCours = CegepControleur.Instance.ObtenirListeCours(nomCegep, nomDepartement);
             }
             catch (Exception e)
             {
@@ -40,13 +40,13 @@ namespace TPCegepWEB.Controllers
                         {
                             nomDepartement = CegepControleur.Instance.ObtenirListeDepartement(nomCegep)[0].Nom;
                             ViewBag.Departement = CegepControleur.Instance.ObtenirDepartement(nomCegep, nomDepartement);
-                            ViewBag.ListeCours = CegepControleur.Instance.ObtenirListeCours(nomCegep, nomDepartement).ToArray();
+                            ViewBag.ListeCours = CegepControleur.Instance.ObtenirListeCours(nomCegep, nomDepartement);
                         }
                         else
                         {
                             nomDepartement = "";
                             ViewBag.Departement = new DepartementDTO();
-                            ViewBag.ListeCours = new List<CoursDTO>().ToArray();
+                            ViewBag.ListeCours = new List<CoursDTO>();
                         }
                     }
                     catch (Exception ex)
@@ -63,7 +63,7 @@ namespace TPCegepWEB.Controllers
                     ViewBag.Cegep = CegepControleur.Instance.ObtenirCegep(nomCegep);
                     ViewBag.ListeDepartements = CegepControleur.Instance.ObtenirListeDepartement(nomCegep);
                     ViewBag.Departement = CegepControleur.Instance.ObtenirDepartement(nomCegep, nomDepartement);
-                    ViewBag.ListeCours = CegepControleur.Instance.ObtenirListeCours(nomCegep, nomDepartement).ToArray();
+                    ViewBag.ListeCours = CegepControleur.Instance.ObtenirListeCours(nomCegep, nomDepartement);
                 }
             }
 
