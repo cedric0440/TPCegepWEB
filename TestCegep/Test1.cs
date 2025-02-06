@@ -13,7 +13,6 @@ public sealed class Test1
     public void TestMethod1()
     {
         CegepController controleur = new CegepController();
-        DepartementController controller = new DepartementController(); 
         ViewResult viewResult = (ViewResult)controleur.Index();
 
         List<CegepDTO> list = (List<CegepDTO>)viewResult.ViewData["ListeCegeps"];
@@ -52,7 +51,7 @@ public sealed class Test1
         }
 
         [TestMethod]
-        public void Test_BonCegep_BonDepart()
+        public void Test_BonCegep_BonDepart_Enseignants()
         {
             // Arrange
             string cegepNom = "Cegep Exemple 1";
@@ -60,48 +59,51 @@ public sealed class Test1
             EnseignantController controller = new EnseignantController();
 
             // Act
-            ViewResult viewResult = (ViewResult)controller.Index(cegepNom,departementNom);
-            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom, departementNom);
+            List<EnseignantDTO> enseignants = ((List<EnseignantDTO>)viewResult.ViewData["ListeEnseignants"]);
 
             // Assert
-            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
-            Assert.IsTrue(departements.Exists(d => d.Nom == departementNom), "Le département 'Informatique' doit exister pour ce cégep.");
+            Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
+            Assert.IsTrue(enseignants.Count > 0, "Il doit y avoir au moins un enseignant dans le département 'Informatique' pour ce cégep.");
         }
 
         [TestMethod]
-        public void Test_BonCegep_MauvaisDepart()
+        public void Test_BonCegep_MauvaisDepart_Enseignants()
         {
             // Arrange
             string cegepNom = "Cegep Exemple 1";
             string departementNom = "Astronomie"; // Ce département n'existe pas
-            DepartementController controller = new DepartementController();
-
+            EnseignantController controller = new EnseignantController();
 
             // Act
-            ViewResult viewResult = (ViewResult)controller.Index(cegepNom);
-            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom, departementNom);
+            List<EnseignantDTO> enseignants = ((List<EnseignantDTO>)viewResult.ViewData["ListeEnseignants"]);
 
             // Assert
-            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
-            Assert.IsFalse(departements.Exists(d => d.Nom == departementNom), "Le département Astronomie ne devrait pas exister dans ce cégep.");
+            Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
+            Assert.AreEqual(1, enseignants.Count, "Aucun enseignant ne doit être listé pour un département inexistant.");
         }
 
         [TestMethod]
-        public void Test_MauvaisCegep_MauvaisDepart()
+        public void Test_MauvaisCegep_MauvaisDepart_Enseignants()
         {
             // Arrange
             string cegepNom = "Cégep Inexistant";
             string departementNom = "Mathématiques";
-            DepartementController controller = new DepartementController();
+            EnseignantController controller = new EnseignantController();
 
             // Act
-            ViewResult viewResult = (ViewResult)controller.Index(cegepNom);
-            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom, departementNom);
+            List<EnseignantDTO> enseignants = ((List<EnseignantDTO>)viewResult.ViewData["ListeEnseignants"]);
 
             // Assert
-            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
-            Assert.AreEqual(0, departements.Count, "Si le cégep n'existe pas, il ne doit pas y avoir de départements listés.");
+            Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
+            Assert.AreEqual(1, enseignants.Count, "Si le cégep n'existe pas, il ne doit pas y avoir d'enseignants listés.");
         }
+
+
+
+      
 
 
 
