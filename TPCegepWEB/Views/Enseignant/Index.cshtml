@@ -1,0 +1,44 @@
+﻿@using GestionCegepWeb.Models
+@{
+    var cegeps = ViewBag.ListeCegeps as List<CegepDTO>;
+    var departements = ViewBag.ListeDepartements as List<DepartementDTO> ?? new List<DepartementDTO>();
+
+}
+
+<h3>Sélectionner un Cégep :</h3>
+<form method="get" asp-controller="Departement" asp-action="Index">
+    <select name="nomCegep" class="form-select" onchange="this.form.submit()">
+        <option value="">-- Tous les cégeps --</option>
+        @foreach (var cegep in cegeps)
+        {
+            <option value="@cegep.Nom" selected="@(ViewBag.CegepSelectionne == cegep.Nom ? "selected" : null)">
+                @cegep.Nom
+            </option>
+        }
+    </select>
+</form>
+
+<br />
+<br />
+<h3>Liste des département(s) (@departements.Count) :</h3>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Nom</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dep in departements)
+        {
+            <tr>
+                <td>@dep.No</td>
+                <td>@dep.Nom</td>
+                <td>@dep.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
