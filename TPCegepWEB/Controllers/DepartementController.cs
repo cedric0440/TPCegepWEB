@@ -11,7 +11,7 @@ namespace TPCegepWEB.Controllers
         [Route("Departements")]
         [Route("Departements/Index")]
         [HttpGet]
-        public IActionResult Index(string? cegepId)
+        public IActionResult Index(string ? cegepId)
         {
             try
             {
@@ -22,6 +22,7 @@ namespace TPCegepWEB.Controllers
                 {
                     // Utilise le cégep sélectionné ou le premier par défaut
                     string nomCegep = cegepId ?? listeCegeps[0].Nom;
+
                     ViewBag.CegepSelectionne = nomCegep;
                     ViewBag.ListeDepartements = CegepControleur.Instance.ObtenirListeDepartement(nomCegep);
                     return View();

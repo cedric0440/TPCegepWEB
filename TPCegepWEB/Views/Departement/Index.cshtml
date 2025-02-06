@@ -7,7 +7,7 @@
 
 <h3>Sélectionner un Cégep :</h3>
 <form method="get" asp-controller="Departement" asp-action="Index">
-    <select name="cegepId" class="form-select" onchange="this.form.submit()">
+    <select name="CegepId" class="form-select" onchange="this.form.submit()">
         <option value="">-- Tous les cégeps --</option>
         @foreach (var cegep in cegeps)
         {
