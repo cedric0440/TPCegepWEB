@@ -57,10 +57,10 @@ public sealed class Test1
             // Arrange
             string cegepNom = "Cegep Exemple 1";
             string departementNom = "Informatique";
-            DepartementController controller = new DepartementController();
+            EnseignantController controller = new EnseignantController();
 
             // Act
-            ViewResult viewResult = (ViewResult)controller.Index(cegepNom);
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom,departementNom);
             List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
 
             // Assert
