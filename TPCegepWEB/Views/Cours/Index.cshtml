@@ -10,7 +10,7 @@ else
     CegepDTO cegep = (ViewBag.Cegep as CegepDTO);
     DepartementDTO departement = (ViewBag.Departement as DepartementDTO);
 
-    <form asp-controller="Enseignant" asp-action="Index" method="get">
+    <form asp-controller="Cours" asp-action="Index" method="get">
         <label>Sélectionner un Cégep :</label>
         <select name="nomCegep" onchange="submit();">
             @foreach (var leCegep in ViewBag.ListeCegeps)
