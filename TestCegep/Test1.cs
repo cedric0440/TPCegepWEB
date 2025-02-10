@@ -154,6 +154,22 @@ public sealed class Test1
         }
 
 
+        public void Test_BCegep_BDepart_AjouterCegep()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple 1";
+            string departementNom = "Informatique";
+            DepartementController controller = new DepartementController();
+
+            // Act
+            ViewResult viewResult = (ViewResult)controller.Index(nomCegep);
+            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
+
+            // Assert
+            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
+            Assert.IsTrue(departements.Exists(d => d.Nom == departementNom), "Le département 'Informatique' doit exister pour ce cégep.");
+        }
+
 
       
 
