@@ -41,5 +41,25 @@ namespace TPCegepWEB.Controllers
                 return View();
             }
         }
+
+        [Route("AjouterDepartement")]
+        [Route("/Departements/AjouterDepartement")]
+        [HttpPost]
+        public IActionResult AjouterDepartement([FromForm] string nomCegep,[FromForm] DepartementDTO departementDTO)
+        {
+            try
+            {
+                CegepControleur.Instance.AjouterDepartement(nomCegep,departementDTO);
+            }
+            catch (Exception e)
+            {
+                //Mettre cette ligne en commentaire avant de lancer les tests fonctionnels
+                TempData["MessageErreur"] = e.Message;
+            }
+
+            //Lancement de l'action Index...
+            return RedirectToAction("Index", "Departements", new {nomCegep});
+        }
+
     }
 }

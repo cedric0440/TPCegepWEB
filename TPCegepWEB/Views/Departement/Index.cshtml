@@ -1,4 +1,5 @@
 ﻿@using GestionCegepWeb.Models
+@model DepartementDTO
 @{
     var cegeps = ViewBag.ListeCegeps as List<CegepDTO>;
     var departements = ViewBag.ListeDepartements as List<DepartementDTO> ?? new List<DepartementDTO>();
@@ -8,7 +9,6 @@
 <h3>Sélectionner un Cégep :</h3>
 <form method="get" asp-controller="Departement" asp-action="Index">
     <select name="nomCegep" class="form-select" onchange="this.form.submit()">
-        <option value="">-- Tous les cégeps --</option>
         @foreach (var cegep in cegeps)
         {
             <option value="@cegep.Nom" selected="@(ViewBag.CegepSelectionne == cegep.Nom ? "selected" : null)">
@@ -41,4 +41,41 @@
         }
     </tbody>
 </table>
+<br />
+<b>Ajouter un Département : </b>
+<br />
+<br />
+<form asp-controller="Departement" asp-action="AjouterDepartement" method="post">
+    <table>
+    
+        <tr>
+            <td>
+                <label asp-for="No"></label>
+            </td>
+            <td>
+                <input asp-for="No" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="Nom"></label>
+            </td>
+            <td>
+                <input asp-for="Nom" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="Description"></label>
+            </td>
+            <td>
+                <input asp-for="Description" />
+            </td>
+        </tr>
+      
+    </table>
+    <input type="submit" value="Ajouter" />
+    <input type="hidden" name="nomCegep" value="@ViewBag.CegepSelectionne" />
+</form>
+<br />
 
