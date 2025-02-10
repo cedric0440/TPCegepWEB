@@ -47,7 +47,7 @@ public sealed class Test1
             // Assert
             List<CegepDTO> list = (List<CegepDTO>)viewResult.ViewData["ListeCegeps"];
             Assert.IsNotNull(list);
-            Assert.AreEqual(5, list.Count); // Aucun cégep ne devrait être trouvé.
+            Assert.AreEqual(6, list.Count); // Aucun cégep ne devrait être trouvé.
         }
 
         [TestMethod]
@@ -56,11 +56,11 @@ public sealed class Test1
             // Arrange
             string cegepNom = "Cegep Exemple 1";
             string departementNom = "Informatique";
-            DepartementController controller = new DepartementController();
+            EnseignantController controller = new EnseignantController();
 
             // Act
-            ViewResult viewResult = (ViewResult)controller.Index(cegepNom);
-            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom,departementNom);
+            List<EnseignantDTO> enseignants = ((List<EnseignantDTO>)viewResult.ViewData["ListeEnseignants"]);
 
             // Assert
             Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
