@@ -17,7 +17,7 @@ public sealed class Test1
 
         List<CegepDTO> list = (List<CegepDTO>)viewResult.ViewData["ListeCegeps"];
         Assert.IsNotNull(list);
-        Assert.AreEqual(5, list.Count);
+        Assert.AreEqual(6, list.Count);
         Assert.AreEqual("Cegep Exemple 1", list[0].Nom);
     }
         [TestMethod]
@@ -56,11 +56,11 @@ public sealed class Test1
             // Arrange
             string cegepNom = "Cegep Exemple 1";
             string departementNom = "Informatique";
-            EnseignantController controller = new EnseignantController();
+            DepartementController controller = new DepartementController();
 
             // Act
-            ViewResult viewResult = (ViewResult)controller.Index(cegepNom, departementNom);
-            List<EnseignantDTO> enseignants = ((List<EnseignantDTO>)viewResult.ViewData["ListeEnseignants"]);
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom);
+            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
 
             // Assert
             Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
@@ -153,25 +153,67 @@ public sealed class Test1
             Assert.AreEqual(1, cours.Count, "Si le cégep n'existe pas, il ne doit pas y avoir de cours listés.");
         }
 
+        //1	Informatique Département dédié à linformatique
 
-        public void Test_BCegep_BDepart_AjouterCegep()
+        [TestMethod]
+        public void Test_BCegep_BDepart_AjouterDepartement()
         {
             // Arrange
             string nomCegep = "Cegep Exemple 1";
-            string departementNom = "Informatique";
+            DepartementDTO departementDTO = new DepartementDTO { No = "1", Nom = "Informatique", Description= "Département dédié à linformatique" };
+
             DepartementController controller = new DepartementController();
 
             // Act
-            ViewResult viewResult = (ViewResult)controller.Index(nomCegep);
-            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
+            RedirectToActionResult ajoutResult = (RedirectToActionResult)controller.AjouterDepartement(nomCegep, departementDTO);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep);
+            List<DepartementDTO> departements = (List<DepartementDTO>)indexResult.ViewData["ListeDepartements"];
 
             // Assert
             Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
-            Assert.IsTrue(departements.Exists(d => d.Nom == departementNom), "Le département 'Informatique' doit exister pour ce cégep.");
+            Assert.IsTrue(departements.Exists(d => d.Nom == departementDTO.Nom), "Le département doit exister pour ce cégep.");
         }
 
+        [TestMethod]
+        public void Test_MOCegep_BDepart_AjouterDepartement()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple Y";
+            DepartementDTO departementDTO = new DepartementDTO { No = "1", Nom = "Informatique", Description = "Département dédié à linformatique" };
 
-      
+            DepartementController controller = new DepartementController();
+
+            // Act
+            RedirectToActionResult ajoutResult = (RedirectToActionResult)controller.AjouterDepartement(nomCegep, departementDTO);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep);
+            List<DepartementDTO> departements = (List<DepartementDTO>)indexResult.ViewData["ListeDepartements"];
+
+            // Assert
+            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
+            Assert.AreEqual(0, departements.Count, "Aucun département ne doit être ajouté à un cégep inexistant.");
+        }
+
+        [TestMethod]
+        public void Test_BCegep_MODepart_AjouterDepartement()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple Y";
+            DepartementDTO departementDTO = new DepartementDTO { No = "87", Nom = "Astronomioe", Description = "Spartiale" };
+
+            DepartementController controller = new DepartementController();
+
+            // Act
+            RedirectToActionResult ajoutResult = (RedirectToActionResult)controller.AjouterDepartement(nomCegep, departementDTO);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep);
+            List<DepartementDTO> departements = (List<DepartementDTO>)indexResult.ViewData["ListeDepartements"];
+
+            // Assert
+            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
+            Assert.IsFalse(departements.Exists(d => d.Nom == departementDTO.Nom), "Le département Astronomie ne devrait pas exister dans ce cégep.");
+
+
+        }
+
 
 
 
