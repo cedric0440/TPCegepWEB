@@ -1,4 +1,5 @@
 ﻿@using GestionCegepWeb.Models
+@model EnseignantDTO
 
 @if (ViewBag.MessageErreur != null)
 {
@@ -71,5 +72,92 @@ else
             </tr>
         }
     </table>
-
 }
+    <br />
+    <b>Ajouter un Enseignant : </b>
+    <br />
+    <br />
+    <form asp-controller="Enseignant" asp-action="AjouterEnseignant" method="post">
+        <table>
+
+            <tr>
+                <td>
+                    <label asp-for="NoEmploye"></label>
+                </td>
+                <td>
+                    <input asp-for="NoEmploye" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Nom"></label>
+                </td>
+                <td>
+                    <input asp-for="Nom" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Prenom"></label>
+                </td>
+                <td>
+                    <input asp-for="Prenom" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Adresse"></label>
+                </td>
+                <td>
+                    <input asp-for="Adresse" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Ville"></label>
+                </td>
+                <td>
+                    <input asp-for="Ville" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Province"></label>
+                </td>
+                <td>
+                    <input asp-for="Province" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="CodePostal"></label>
+                </td>
+                <td>
+                    <input asp-for="CodePostal" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Telephone"></label>
+                </td>
+                <td>
+                    <input asp-for="Telephone" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Courriel"></label>
+                </td>
+                <td>
+                    <input asp-for="Courriel" />
+                </td>
+            </tr>
+
+        </table>
+        <input type="submit" value="Ajouter" />
+    @foreach (var enseignant in ViewBag.ListeEnseignants)
+    {
+        <input type="hidden" name="nomEnseignant" value="@enseignant.Nom" />
+    }
+</form>
+
