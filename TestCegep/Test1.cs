@@ -164,6 +164,8 @@ public sealed class Test1
             DepartementController controller = new DepartementController();
 
             // Act
+            ViewResult viewResult = (ViewResult)controller.AjouterDepartement(nomCegep,departementNom);
+
             ViewResult viewResult = (ViewResult)controller.Index(nomCegep);
             List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
 
