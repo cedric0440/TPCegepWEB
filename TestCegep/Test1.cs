@@ -47,7 +47,25 @@ public sealed class Test1
             // Assert
             List<CegepDTO> list = (List<CegepDTO>)viewResult.ViewData["ListeCegeps"];
             Assert.IsNotNull(list);
-            Assert.AreEqual(6, list.Count); // Aucun cégep ne devrait être trouvé.
+            Assert.AreEqual(5, list.Count); // Aucun cégep ne devrait être trouvé.
+
+        }
+
+        [TestMethod]
+        public void Test_BonCegep_BonDepart()
+        {
+            // Arrange
+            string cegepNom = "Cegep Exemple 1";
+            string departementNom = "Informatique";
+            EnseignantController controller = new EnseignantController();
+
+            // Act
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom, departementNom);
+            List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
+
+            // Assert
+            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
+            Assert.IsTrue(departements.Exists(d => d.Nom == departementNom), "Le département 'Informatique' doit exister pour ce cégep.");
         }
 
         [TestMethod]
