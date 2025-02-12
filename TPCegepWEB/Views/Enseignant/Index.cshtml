@@ -154,10 +154,9 @@ else
             </tr>
 
         </table>
-        <input type="submit" value="Ajouter" />
-    @foreach (var enseignant in ViewBag.ListeEnseignants)
-    {
-        <input type="hidden" name="nomEnseignant" value="@enseignant.Nom" />
-    }
+        <input type="submit" value="Ajouter" /> 
+        <input type="hidden" name="nomCegep" value="@ViewBag.Cegep.Nom" />
+        <input type="hidden" name="nomDepartement" value="@ViewBag.Departement.Nom" />
+    
 </form>
 
