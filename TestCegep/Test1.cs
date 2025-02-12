@@ -5,21 +5,21 @@ using TPCegepWEB.Controllers;
 namespace TPCegepWEB
 {
 
-[TestClass]
-public sealed class Test1
-{
-
-    [TestMethod]
-    public void TestMethod1()
+    [TestClass]
+    public sealed class Test1
     {
-        CegepController controleur = new CegepController();
-        ViewResult viewResult = (ViewResult)controleur.Index();
 
-        List<CegepDTO> list = (List<CegepDTO>)viewResult.ViewData["ListeCegeps"];
-        Assert.IsNotNull(list);
-        Assert.AreEqual(6, list.Count);
-        Assert.AreEqual("Cegep Exemple 1", list[0].Nom);
-    }
+        [TestMethod]
+        public void TestMethod1()
+        {
+            CegepController controleur = new CegepController();
+            ViewResult viewResult = (ViewResult)controleur.Index();
+
+            List<CegepDTO> list = (List<CegepDTO>)viewResult.ViewData["ListeCegeps"];
+            Assert.IsNotNull(list);
+            Assert.AreEqual(6, list.Count);
+            Assert.AreEqual("Cegep Exemple 1", list[0].Nom);
+        }
         [TestMethod]
         public void Test_Cegep_Null()
         {
@@ -47,7 +47,7 @@ public sealed class Test1
             // Assert
             List<CegepDTO> list = (List<CegepDTO>)viewResult.ViewData["ListeCegeps"];
             Assert.IsNotNull(list);
-            Assert.AreEqual(5, list.Count); // Aucun cégep ne devrait être trouvé.
+            Assert.AreEqual(6, list.Count); // Aucun cégep ne devrait être trouvé.
         }
 
         [TestMethod]
@@ -56,10 +56,10 @@ public sealed class Test1
             // Arrange
             string cegepNom = "Cegep Exemple 1";
             string departementNom = "Informatique";
-            EnseignantController controller = new EnseignantController();
+            DepartementController controller = new DepartementController();
 
             // Act
-            ViewResult viewResult = (ViewResult)controller.Index(cegepNom, departementNom);
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom);
             List<DepartementDTO> departements = (List<DepartementDTO>)viewResult.ViewData["ListeDepartements"];
 
             // Assert
@@ -112,7 +112,7 @@ public sealed class Test1
             EnseignantController controller = new EnseignantController();
 
             // Act
-            ViewResult viewResult = (ViewResult)controller.Index(cegepNom,departementNom);
+            ViewResult viewResult = (ViewResult)controller.Index(cegepNom, departementNom);
             List<EnseignantDTO> enseignants = ((List<EnseignantDTO>)viewResult.ViewData["ListeEnseignants"]);
 
             // Assert
@@ -206,14 +206,13 @@ public sealed class Test1
             Assert.AreEqual(1, cours.Count, "Si le cégep n'existe pas, il ne doit pas y avoir de cours listés.");
         }
 
-        //1	Informatique Département dédié à linformatique
 
         [TestMethod]
         public void Test_BCegep_BDepart_AjouterDepartement()
         {
             // Arrange
             string nomCegep = "Cegep Exemple 1";
-            DepartementDTO departementDTO = new DepartementDTO { No = "1", Nom = "Informatique", Description= "Département dédié à linformatique" };
+            DepartementDTO departementDTO = new DepartementDTO { No = "1", Nom = "Informatique", Description = "Département dédié à linformatique" };
 
             DepartementController controller = new DepartementController();
 
@@ -267,8 +266,65 @@ public sealed class Test1
 
         }
 
+        [TestMethod]
+        public void Test_BCegep_BDepar_BEnseignant_AjouterEnseignant()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple 3";
+            string nomDepartement = "Loisir";
+            EnseignantDTO enseignantDTO = new EnseignantDTO { NoEmploye = 645, Nom = "bb", Prenom = "bb",Adresse="bb",Ville="bb",Province="bb",CodePostal="bb",Telephone="bb",Courriel="bb" };
 
+            EnseignantController controller = new EnseignantController();
 
+            // Act
+            RedirectToActionResult ajoutResult = (RedirectToActionResult)controller.AjouterEnseignant(nomCegep, nomDepartement,enseignantDTO);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep,nomDepartement);
+            List<EnseignantDTO> enseignants = (List<EnseignantDTO>)indexResult.ViewData["ListeEnseignants"];
+
+            // Assert
+            Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
+            Assert.IsTrue(enseignants.Exists(e => e.NoEmploye== enseignantDTO.NoEmploye), "L'enseignant doit exister pour ce cégep.");
+        }
+
+        [TestMethod]
+        public void Test_BCegep_MODepar_BEnseignant_AjouterEnseignant()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple 3";
+            string nomDepartement = "Sports";
+            EnseignantDTO enseignantDTO = new EnseignantDTO { NoEmploye = 645, Nom = "bb", Prenom = "bb", Adresse = "bb", Ville = "bb", Province = "bb", CodePostal = "bb", Telephone = "bb", Courriel = "bb" };
+
+            EnseignantController controller = new EnseignantController();
+
+            // Act
+            RedirectToActionResult ajoutResult = (RedirectToActionResult)controller.AjouterEnseignant(nomCegep, nomDepartement, enseignantDTO);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep, nomDepartement);
+            List<EnseignantDTO> enseignants = (List<EnseignantDTO>)indexResult.ViewData["ListeEnseignants"];
+
+            // Assert
+            Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
+            Assert.IsTrue(enseignants.Exists(e => e.NoEmploye == enseignantDTO.NoEmploye), "L'enseignant NE doit PAS exister pour ce département.");
+        }
+
+        [TestMethod]
+        public void Test_BCegep_BDepar_MoEnseignant_AjouterEnseignant()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple 3";
+            string nomDepartement = "Loisir";
+            EnseignantDTO enseignantDTO = new EnseignantDTO { NoEmploye = 258, Nom = "cc", Prenom = "cc", Adresse = "cc", Ville = "cc", Province = "cc", CodePostal = "cc", Telephone = "cc", Courriel = "cc" };
+
+            EnseignantController controller = new EnseignantController();
+
+            // Act
+            RedirectToActionResult ajoutResult = (RedirectToActionResult)controller.AjouterEnseignant(nomCegep, nomDepartement, enseignantDTO);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep, nomDepartement);
+            List<EnseignantDTO> enseignants = (List<EnseignantDTO>)indexResult.ViewData["ListeEnseignants"];
+
+            // Assert
+            Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
+            Assert.IsTrue(enseignants.Exists(e => e.NoEmploye == enseignantDTO.NoEmploye), "L'enseignant NE doit  PASexister pour ce cégep.");
+        }
 
     }
 
