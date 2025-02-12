@@ -1,4 +1,5 @@
 ﻿@using GestionCegepWeb.Models
+@model DepartementDTO
 
 @if (ViewBag.MessageErreur != null)
 {
@@ -60,5 +61,44 @@ else
             </tr>
         }
     </table>
+
+    <br />
+    <b>Ajouter un Cours : </b>
+    <br />
+    <br />
+    <form asp-controller="Cours" asp-action="AjouterCours" method="post">
+        <table>
+
+            <tr>
+                <td>
+                    <label asp-for="No"></label>
+                </td>
+                <td>
+                    <input asp-for="No" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Nom"></label>
+                </td>
+                <td>
+                    <input asp-for="Nom" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Description"></label>
+                </td>
+                <td>
+                    <input asp-for="Description" />
+                </td>
+            </tr>
+
+        </table>
+        <input type="submit" value="Ajouter" />
+        <input type="hidden" name="nomCegep" value="@ViewBag.Cegep.Nom" />
+        <input type="hidden" name="nomDepartement" value="@ViewBag.Departement.Nom" />
+    </form>
+    <br />
 
 }

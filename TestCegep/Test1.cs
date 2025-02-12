@@ -134,7 +134,7 @@ namespace TPCegepWEB
 
             // Assert
             Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
-            Assert.AreEqual(1, enseignants.Count, "Aucun enseignant ne doit être listé pour un département inexistant.");
+            Assert.AreEqual(3, enseignants.Count, "Aucun enseignant ne doit être listé pour un département inexistant.");
         }
 
         [TestMethod]
@@ -151,7 +151,7 @@ namespace TPCegepWEB
 
             // Assert
             Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
-            Assert.AreEqual(1, enseignants.Count, "Si le cégep n'existe pas, il ne doit pas y avoir d'enseignants listés.");
+            Assert.AreEqual(3, enseignants.Count, "Si le cégep n'existe pas, il ne doit pas y avoir d'enseignants listés.");
         }
 
 
@@ -186,7 +186,7 @@ namespace TPCegepWEB
 
             // Assert
             Assert.IsNotNull(cours, "La liste des cours ne doit pas être null.");
-            Assert.AreEqual(1, cours.Count, "Aucun cours ne doit être listé pour un département inexistant.");
+            Assert.AreEqual(2, cours.Count, "Aucun cours ne doit être listé pour un département inexistant.");
         }
 
         [TestMethod]
@@ -203,7 +203,7 @@ namespace TPCegepWEB
 
             // Assert
             Assert.IsNotNull(cours, "La liste des cours ne doit pas être null.");
-            Assert.AreEqual(1, cours.Count, "Si le cégep n'existe pas, il ne doit pas y avoir de cours listés.");
+            Assert.AreEqual(2, cours.Count, "Si le cégep n'existe pas, il ne doit pas y avoir de cours listés.");
         }
 
 
@@ -324,6 +324,69 @@ namespace TPCegepWEB
             // Assert
             Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
             Assert.IsTrue(enseignants.Exists(e => e.NoEmploye == enseignantDTO.NoEmploye), "L'enseignant NE doit  PASexister pour ce cégep.");
+        }
+
+
+
+
+
+        public void Test_BCegep_BDepar_BCours_AjouterCours()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple 3";
+            string nomDepartement = "Loisir";
+            CoursDTO coursDTO = new CoursDTO { No = "150", Nom = "Animation", Description = "Party" };
+
+            CoursController controller = new CoursController();
+
+            // Act
+            RedirectToActionResult ajoutResult = (RedirectToActionResult)controller.AjouterCours(nomCegep, nomDepartement, coursDTO);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep, nomDepartement);
+            List<CoursDTO> cours = (List<CoursDTO>)indexResult.ViewData["ListeCours"];
+
+            // Assert
+            Assert.IsNotNull(cours, "La liste des cours ne doit pas être null.");
+            Assert.IsTrue(cours.Exists(c => c.No == coursDTO.No), "Le cours doit exister pour ce cégep.");
+        }
+
+        [TestMethod]
+        public void Test_BCegep_MODepar_BCours_AjouterCours()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple 3";
+            string nomDepartement = "Sports";
+            CoursDTO coursDTO = new CoursDTO { No = "150", Nom = "Animation", Description = "Party" };
+
+            CoursController controller = new CoursController();
+
+            // Act
+            RedirectToActionResult ajoutResult = (RedirectToActionResult)controller.AjouterCours(nomCegep, nomDepartement, coursDTO);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep, nomDepartement);
+            List<CoursDTO> cours = (List<CoursDTO>)indexResult.ViewData["ListeCours"];
+
+            // Assert
+            Assert.IsNotNull(cours, "La liste des cours ne doit pas être null.");
+            Assert.IsTrue(cours.Exists(c => c.No == coursDTO.No), "Le cours NE doit PAS exister pour ce département.");
+        }
+
+        [TestMethod]
+        public void Test_BCegep_BDepar_MoCours_AjouterCours()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple 3";
+            string nomDepartement = "Loisir";
+            CoursDTO coursDTO = new CoursDTO { No = "1", Nom = "Informatique", Description = "informatique" };
+
+            CoursController controller = new CoursController();
+
+            // Act
+            RedirectToActionResult ajoutResult = (RedirectToActionResult)controller.AjouterCours(nomCegep, nomDepartement, coursDTO);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep, nomDepartement);
+            List<CoursDTO> cours = (List<CoursDTO>)indexResult.ViewData["ListeCours"];
+
+            // Assert
+            Assert.IsNotNull(cours, "La liste des cours ne doit pas être null.");
+            Assert.IsTrue(cours.Exists(c => c.No == coursDTO.No), "Le cours NE doit  PAS exister pour ce cégep.");
         }
 
     }

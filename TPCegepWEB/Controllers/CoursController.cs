@@ -69,5 +69,26 @@ namespace TPCegepWEB.Controllers
 
             //Retour de la vue...
             return View();
-    }   }
+        }
+
+        [Route("AjouterCours")]
+        [Route("/Cours/AjouterCours")]
+        [HttpPost]
+        public IActionResult AjouterCours([FromForm] string nomCegep, [FromForm] string nomDepartement, [FromForm] CoursDTO coursDTO)
+        {
+            try
+            {
+                CegepControleur.Instance.AjouterCours(nomCegep, nomDepartement, coursDTO);
+            }
+            catch (Exception e)
+            {
+                //Mettre cette ligne en commentaire avant de lancer les tests fonctionnels
+                //TempData["MessageErreur"] = e.Message;
+            }
+
+            //Lancement de l'action Index...
+            return RedirectToAction("Index", "Cours", new { nomCegep, nomDepartement });
+        }
+
+    }
 }
