@@ -241,7 +241,7 @@ namespace TPCegepWEB
             List<DepartementDTO> departements = (List<DepartementDTO>)indexResult.ViewData["ListeDepartements"];
 
             // Assert
-            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
+            Assert.IsNotNull(departements, "La liste des départements  doit  être null.");
             Assert.AreEqual(0, departements.Count, "Aucun département ne doit être ajouté à un cégep inexistant.");
         }
 
@@ -249,11 +249,11 @@ namespace TPCegepWEB
         public void Test_BCegep_MODepart_AjouterDepartement()
         {
             // Arrange
-            string nomCegep = "Cegep Exemple Y";
-            DepartementDTO departementDTO = new DepartementDTO { No = "87", Nom = "Astronomioe", Description = "Spartiale" };
+            string nomCegep = "Cegep Exemple 1";
+            DepartementDTO departementDTO = new DepartementDTO { No = "98", Nom = "Plage", Description = "jour" };
 
             DepartementController controller = new DepartementController();
-
+           
             // Act
             RedirectToActionResult ajoutResult = (RedirectToActionResult)controller.AjouterDepartement(nomCegep, departementDTO);
             ViewResult indexResult = (ViewResult)controller.Index(nomCegep);
@@ -272,7 +272,7 @@ namespace TPCegepWEB
             // Arrange
             string nomCegep = "Cegep Exemple 3";
             string nomDepartement = "Loisir";
-            EnseignantDTO enseignantDTO = new EnseignantDTO { NoEmploye = 645, Nom = "bb", Prenom = "bb",Adresse="bb",Ville="bb",Province="bb",CodePostal="bb",Telephone="bb",Courriel="bb" };
+            EnseignantDTO enseignantDTO = new EnseignantDTO { NoEmploye = 777, Nom = "pp", Prenom = "pp",Adresse="pp",Ville="pp",Province="pp",CodePostal="pp",Telephone="pp",Courriel="pp" };
 
             EnseignantController controller = new EnseignantController();
 

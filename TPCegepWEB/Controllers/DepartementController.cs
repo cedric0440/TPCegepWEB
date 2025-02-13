@@ -54,7 +54,7 @@ namespace TPCegepWEB.Controllers
             catch (Exception e)
             {
                 //Mettre cette ligne en commentaire avant de lancer les tests fonctionnels
-                //TempData["MessageErreur"] = e.Message;
+               // TempData["MessageErreur"] = e.Message;
             }
 
             //Lancement de l'action Index...
