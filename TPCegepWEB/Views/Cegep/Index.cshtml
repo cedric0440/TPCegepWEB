@@ -1,8 +1,8 @@
 ﻿@using GestionCegepWeb.Models
 @model CegepDTO
 <h3>Liste des Cégep(s) (@ViewBag.ListeCegeps.Count) </h3>
-<table class="table">
-    <thead>
+<form asp-controller="" asp-action="" method="post">
+    <table>
         <tr>
             <th>Nom</th>
             <th>Adresse</th>
@@ -11,9 +11,9 @@
             <th>Code Postal</th>
             <th>Téléphone</th>
             <th>Courriel</th>
+            <th><input value="Vider" onclick="if (confirm('Voulez-vous vraiment vider la liste des Cégeps ?')) { this.form.action = '/Cegep/ViderListeCegep'; this.form.method = 'post'; submit(); }" type="button" /></th>
+
         </tr>
-    </thead>
-    <tbody>
         @foreach (CegepDTO cegep in ViewBag.ListeCegeps)
         {
             <tr>
@@ -24,10 +24,13 @@
                 <td>@cegep.CodePostal</td>
                 <td>@cegep.Telephone</td>
                 <td>@cegep.Courriel</td>
+                <td><input value="  Supprimer   " onclick="if (confirm('Voulez-vous vraiment supprimer le Cégep : @cegep.Nom ?')) { document.getElementById('nomCegep').value = '@cegep.Nom'; this.form.action = '/Cegep/SupprimerCegep'; this.form.method = 'post'; submit(); }" type="button" /></td>
             </tr>
         }
-    </tbody>
-</table>
+    </table>
+    <input id="nomCegep" name="nomCegep" type="hidden">
+</form>
+
 
 <br />
 <b>Ajouter un cégep : </b>
@@ -95,5 +98,6 @@
     <input type="submit" value="Ajouter" />
 </form>
 <br />
+
 
 

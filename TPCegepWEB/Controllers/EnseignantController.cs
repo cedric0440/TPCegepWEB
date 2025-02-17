@@ -90,5 +90,52 @@ namespace TPCegepWEB.Controllers
             //Lancement de l'action Index...
             return RedirectToAction("Index", "Enseignants", new { nomCegep ,nomDepartement});
         }
+
+        /// <summary>
+        /// Action SupprimerEnseignant.
+        /// Permet de supprimer un Enseignant(e)s.
+        /// </summary>
+        /// <param name="nomCegep">Le nom du Cégep.</param>
+        /// <param name="nomDepartement">Le nom du Département.</param>
+        /// <param name="noEnseignant">Le numéro employé d'un enseignant(e).</param>
+        /// <returns>ActionResult</returns>
+
+        [Route("SupprimerEnseignant")]
+        [Route("/Enseignants/SupprimerEnseignant")]
+        [HttpPost]
+        public IActionResult SupprimerEnseignant([FromForm] string nomCegep, [FromForm] string nomDepartement, [FromForm] int noEnseignant)
+        {
+            try
+            {
+                CegepControleur.Instance.SupprimerEnseignant(nomCegep, nomDepartement,noEnseignant);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+            return RedirectToAction("Index", "Enseignants", new { nomCegep, nomDepartement});
+        }
+
+        /// <summary>
+        /// Action ViderListeEnseignant.
+        /// Permet de vider la liste des Enseignant(e)s.
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        [Route("/Enseignants")]
+        [Route("/Enseignants/ViderListeEnseignant")]
+        [HttpPost]
+        public IActionResult ViderListeEnseignant([FromForm] string nomCegep, [FromForm] string nomDepartement)
+        {
+            try
+            {
+                CegepControleur.Instance.ViderListeEnseignant(nomCegep,nomDepartement);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+
+            return RedirectToAction("Index", "Enseignants");
+        }
     }
 }

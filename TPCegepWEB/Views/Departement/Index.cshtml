@@ -22,12 +22,15 @@
 <br />
 <h3>Liste des département(s) (@departements.Count) :</h3>
 <br />
-<table class="table">
+<form asp-controller="" asp-action="" method="post">
+<table>
     <thead>
         <tr>
             <th>No</th>
             <th>Nom</th>
             <th>Description</th>
+            <th><input value="Vider" onclick="if (confirm('Voulez-vous vraiment vider la liste des Départements ?')) { this.form.action = '/Departements/ViderListeDepartement'; this.form.method = 'post'; submit(); }" type="button" /></th>
+
         </tr>
     </thead>
     <tbody>
@@ -37,10 +40,17 @@
                 <td>@dep.No</td>
                 <td>@dep.Nom</td>
                 <td>@dep.Description</td>
+                <td><input value="  Supprimer   " onclick="if (confirm('Voulez-vous vraiment supprimer le Département : @dep.Nom ?')) { document.getElementById('nomDepartement').value = '@dep.Nom'; this.form.action = '/Departements/SupprimerDepartement'; this.form.method = 'post'; submit(); }" type="button" /></td>
+
             </tr>
         }
     </tbody>
 </table>
+    <input type="hidden" name="nomCegep" value="@ViewBag.CegepSelectionne" />
+    <input id="nomDepartement" name="nomDepartement" type="hidden">
+
+</form>
+
 <br />
 <b>Ajouter un Département : </b>
 <br />

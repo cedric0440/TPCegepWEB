@@ -61,5 +61,51 @@ namespace TPCegepWEB.Controllers
             return RedirectToAction("Index", "Departements", new {nomCegep});
         }
 
+
+        /// <summary>
+        /// Action SupprimerDepartement.
+        /// Permet de supprimer un Cégep.
+        /// </summary>
+        /// <param name="nomCegep">Le nom du Cégep.</param>
+        /// <param name="nomDepartement">Le nom du Département.</param>
+        /// <returns>ActionResult</returns>
+
+        [Route("SupprimerDepartement")]
+        [Route("/Departements/SupprimerDepartement")]
+        [HttpPost]
+        public IActionResult SupprimerDepartement([FromForm] string nomCegep, [FromForm] string nomDepartement)
+        {
+            try
+            {
+                CegepControleur.Instance.SupprimerDepartement(nomCegep,nomDepartement);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+            return RedirectToAction("Index", "Departements", new {nomCegep,nomDepartement});
+        }
+
+        /// <summary>
+        /// Action ViderListeDepartement.
+        /// Permet de vider la liste des Départements.
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        [Route("/Departements/ViderListeDepartement")]
+        [HttpPost]
+        public IActionResult ViderListeDepartement([FromForm] string nomCegep)
+        {
+            try
+            {
+                CegepControleur.Instance.ViderListeDepartement(nomCegep);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+
+            return RedirectToAction("Index", "Departements");
+        }
+
     }
 }

@@ -45,6 +45,7 @@ else
     <br />
     <h3>Liste des enseignants(s) (@ViewBag.ListeEnseignants.Count enseignant(s)) :</h3>
     <br />
+    <form asp-controller="" asp-action="" method="post">
     <table>
         <tr>
             <th>No d'employé</th>
@@ -56,6 +57,8 @@ else
             <th>Code postal</th>
             <th>Téléphone</th>
             <th>Courriel</th>
+            <th><input value="Vider" onclick="if (confirm('Voulez-vous vraiment vider la liste des Enseignant(e)s ?')) { this.form.action = '/Enseignants/ViderListeEnseignant'; this.form.method = 'post'; submit(); }" type="button" /></th>
+
         </tr>
         @foreach (EnseignantDTO enseignant in ViewBag.ListeEnseignants)
         {
@@ -69,10 +72,15 @@ else
                 <td>@enseignant.CodePostal</td>
                 <td>@enseignant.Telephone</td>
                 <td>@enseignant.Courriel</td>
+                <td><input value="  Supprimer   " onclick="if (confirm('Voulez-vous vraiment supprimer l'enseignant(e) avec le numéro employé : @enseignant.NoEmploye ?')) { document.getElementById('noEnseignant').value = '@enseignant.NoEmploye'; this.form.action = '/Enseignants/SupprimerEnseignant'; this.form.method = 'post'; submit(); }" type="button" /></td>
             </tr>
         }
     </table>
-}
+        <input type="hidden" name="nomCegep" value="@ViewBag.Cegep.Nom" />
+        <input type="hidden" name="nomDepartement" value="@ViewBag.Departement.Nom" />
+        <input id="noEnseignant" name="noEnseignant" type="hidden">
+    </form>
+
     <br />
     <b>Ajouter un Enseignant : </b>
     <br />
@@ -160,3 +168,4 @@ else
     
 </form>
 
+}

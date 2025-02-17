@@ -90,5 +90,52 @@ namespace TPCegepWEB.Controllers
             return RedirectToAction("Index", "Cours", new { nomCegep, nomDepartement });
         }
 
+
+        /// <summary>
+        /// Action SupprimerCours.
+        /// Permet de supprimer un Cours.
+        /// </summary>
+        /// <param name="nomCegep">Le nom du Cégep.</param>
+        /// <param name="nomDepartement">Le nom du Département.</param>
+        /// <param name="nomCours">Le nom du Cours.</param>
+        /// <returns>ActionResult</returns>
+
+        [Route("SupprimerCours")]
+        [Route("/Cours/SupprimerCours")]
+        [HttpPost]
+        public IActionResult SupprimerCours([FromForm] string nomCegep, [FromForm] string nomDepartement, [FromForm] string  nomCours)
+        {
+            try
+            {
+                CegepControleur.Instance.SupprimerCours(nomCegep, nomDepartement, nomCours);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+            return RedirectToAction("Index", "Cours", new { nomCegep, nomDepartement });
+        }
+
+        /// <summary>
+        /// Action ViderListeCours.
+        /// Permet de vider la liste des Cours.
+        /// </summary>
+        /// <returns>ActionResult</returns>
+        [Route("/Cours")]
+        [Route("/Cours/ViderListeCours")]
+        [HttpPost]
+        public IActionResult ViderListeCours([FromForm] string nomCegep, [FromForm] string nomDepartement)
+        {
+            try
+            {
+                CegepControleur.Instance.ViderListeCours(nomCegep, nomDepartement);
+            }
+            catch (Exception e)
+            {
+                ViewBag.MessageErreur = e.Message;
+            }
+
+            return RedirectToAction("Index", "Enseignants");
+        }
     }
 }

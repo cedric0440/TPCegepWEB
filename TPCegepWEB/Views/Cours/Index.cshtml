@@ -45,11 +45,14 @@ else
     <br />
     <h3>Liste des Cours(@ViewBag.ListeCours.Count cours) :</h3>
     <br />
+    <form asp-controller="" asp-action="" method="post">
     <table>
         <tr>
             <th>No</th>
             <th>Nom</th>
             <th>Description</th>
+            <th><input value="Vider" onclick="if (confirm('Voulez-vous vraiment vider la liste des Cours ?')) { this.form.action = '/Cours/ViderListeCours'; this.form.method = 'post'; submit(); }" type="button" /></th>
+
         </tr>
         @foreach (CoursDTO cours in ViewBag.ListeCours)
         {
@@ -57,11 +60,16 @@ else
                 <td>@cours.No</td>
                 <td>@cours.Nom</td>
                 <td>@cours.Description</td>
-                
+                <td><input value="  Supprimer   " onclick="if (confirm('Voulez-vous vraiment supprimer le cours: @cours.Nom ?')) { document.getElementById('nomCours').value = '@cours.Nom'; this.form.action = '/Cours/SupprimerCours'; this.form.method = 'post'; submit(); }" type="button" /></td>    
+            
             </tr>
         }
     </table>
+        <input type="hidden" name="nomCegep" value="@ViewBag.Cegep.Nom" />
+        <input type="hidden" name="nomDepartement" value="@ViewBag.Departement.Nom" />
+        <input id="nomCours" name="nomCours" type="hidden">
 
+    </form>
     <br />
     <b>Ajouter un Cours : </b>
     <br />
