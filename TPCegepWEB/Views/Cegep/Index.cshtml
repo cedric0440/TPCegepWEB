@@ -24,6 +24,7 @@
                 <td>@cegep.CodePostal</td>
                 <td>@cegep.Telephone</td>
                 <td>@cegep.Courriel</td>
+                <td><input value="Modifier" onclick="document.getElementById('nomCegep').value ='@cegep.Nom'; this.form.action='/Cegep/FormulaireModifierCegep'; this.form.method='get'; submit();" type="button" /></td>
                 <td><input value="  Supprimer   " onclick="if (confirm('Voulez-vous vraiment supprimer le Cégep : @cegep.Nom ?')) { document.getElementById('nomCegep').value = '@cegep.Nom'; this.form.action = '/Cegep/SupprimerCegep'; this.form.method = 'post'; submit(); }" type="button" /></td>
             </tr>
         }

@@ -72,7 +72,7 @@ else
                 <td>@enseignant.CodePostal</td>
                 <td>@enseignant.Telephone</td>
                 <td>@enseignant.Courriel</td>
-                <td><input value="  Supprimer   " onclick="if (confirm('Voulez-vous vraiment supprimer l'enseignant(e) avec le numéro employé : @enseignant.NoEmploye ?')) { document.getElementById('noEnseignant').value = '@enseignant.NoEmploye'; this.form.action = '/Enseignants/SupprimerEnseignant'; this.form.method = 'post'; submit(); }" type="button" /></td>
+                <td><input value="  Supprimer   " onclick="if (confirm('Voulez-vous vraiment supprimer enseignant(e) avec le numéro employé : @enseignant.NoEmploye ?')) { document.getElementById('noEnseignant').value = '@enseignant.NoEmploye'; this.form.action = '/Enseignants/SupprimerEnseignant'; this.form.method = 'post'; submit(); }" type="button" /></td>
             </tr>
         }
     </table>

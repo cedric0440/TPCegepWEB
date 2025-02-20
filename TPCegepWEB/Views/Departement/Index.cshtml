@@ -40,6 +40,7 @@
                 <td>@dep.No</td>
                 <td>@dep.Nom</td>
                 <td>@dep.Description</td>
+                    <td><input value="Modifier" onclick="document.getElementById('nomDepartement').value ='@dep.Nom'; this.form.action='/Departement/FormulaireModifierDepartement'; this.form.method='get'; submit();" type="button" /></td>
                 <td><input value="  Supprimer   " onclick="if (confirm('Voulez-vous vraiment supprimer le Département : @dep.Nom ?')) { document.getElementById('nomDepartement').value = '@dep.Nom'; this.form.action = '/Departements/SupprimerDepartement'; this.form.method = 'post'; submit(); }" type="button" /></td>
 
             </tr>

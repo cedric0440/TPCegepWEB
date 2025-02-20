@@ -11,4 +11,11 @@
     <PackageReference Include="xunit.assert" Version="2.9.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Cegep\FormulaireModifierCegep.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

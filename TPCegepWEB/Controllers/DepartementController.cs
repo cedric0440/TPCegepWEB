@@ -8,8 +8,8 @@ namespace TPCegepWEB.Controllers
 {
     public class DepartementController : Controller
     {
-        [Route("Departements")]
-        [Route("Departements/Index")]
+        [Route("Departement")]
+        [Route("Departement/Index")]
         [HttpGet]
         public IActionResult Index(string ? nomCegep)
         {
@@ -43,7 +43,7 @@ namespace TPCegepWEB.Controllers
         }
 
         [Route("AjouterDepartement")]
-        [Route("/Departements/AjouterDepartement")]
+        [Route("/Departement/AjouterDepartement")]
         [HttpPost]
         public IActionResult AjouterDepartement([FromForm] string nomCegep,[FromForm] DepartementDTO departementDTO)
         {
@@ -58,7 +58,7 @@ namespace TPCegepWEB.Controllers
             }
 
             //Lancement de l'action Index...
-            return RedirectToAction("Index", "Departements", new {nomCegep});
+            return RedirectToAction("Index", "Departement", new {nomCegep});
         }
 
 
@@ -71,7 +71,7 @@ namespace TPCegepWEB.Controllers
         /// <returns>ActionResult</returns>
 
         [Route("SupprimerDepartement")]
-        [Route("/Departements/SupprimerDepartement")]
+        [Route("/Departement/SupprimerDepartement")]
         [HttpPost]
         public IActionResult SupprimerDepartement([FromForm] string nomCegep, [FromForm] string nomDepartement)
         {
@@ -83,7 +83,7 @@ namespace TPCegepWEB.Controllers
             {
                 ViewBag.MessageErreur = e.Message;
             }
-            return RedirectToAction("Index", "Departements", new {nomCegep,nomDepartement});
+            return RedirectToAction("Index", "Departement", new {nomCegep,nomDepartement});
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace TPCegepWEB.Controllers
         /// Permet de vider la liste des Départements.
         /// </summary>
         /// <returns>ActionResult</returns>
-        [Route("/Departements/ViderListeDepartement")]
+        [Route("/Departement/ViderListeDepartement")]
         [HttpPost]
         public IActionResult ViderListeDepartement([FromForm] string nomCegep)
         {
@@ -104,8 +104,57 @@ namespace TPCegepWEB.Controllers
                 ViewBag.MessageErreur = e.Message;
             }
 
-            return RedirectToAction("Index", "Departements");
+            return RedirectToAction("Index", "Departement");
         }
 
+        /// <summary>
+        /// Action ModifierDepartement.
+        /// Permet de modifier un Cégep.
+        /// </summary>
+        /// <param name="nomCegep">Nom du Cégep.</param>
+        /// <param name="departementDTO">Le Département a modifier.</param>
+        /// <returns>ActionResult</returns>
+        [Route("/Departement/ModifierDepartement")]
+        [HttpPost]
+        public IActionResult ModifierDepartement([FromForm] string nomCegep,[FromForm] DepartementDTO departementDTO)
+        {
+            try
+            {
+                CegepControleur.Instance.ModifierDepartement(nomCegep,departementDTO);
+            }
+            catch (Exception e)
+            {
+                TempData["MessageErreur"] = e.Message;
+                return RedirectToAction("FormulaireModifierDepartement", "Departement", new { nomCegep,departementDTO});
+
+            }
+            //Lancement de l'action Index...
+            return RedirectToAction("Index", "Departement", new{ nomCegep});
+        }
+
+        /// <summary>
+        /// Action FormulaireModifierDepartement.
+        /// Permet d'afficher le formulaire pour la modification d'un Département.
+        /// </summary>
+        /// <param name="nomCegep">Nom du Cégep.</param>
+        /// <param name="nomDepartement">Nom du Cégep.</param>
+        /// <returns>IActionResult</returns>
+        [Route("/Departement/FormulaireModifierDepartement")]
+        [HttpGet]
+        public IActionResult FormulaireModifierDepartement([FromQuery] string nomCegep, [FromQuery] string nomDepartement)
+        {
+            try
+            {
+                ViewBag.MessageErreur = TempData["MessageErreur"];
+                DepartementDTO departement = CegepControleur.Instance.ObtenirDepartement(nomCegep,nomDepartement);
+                ViewBag.nomCegep = nomCegep;
+                return View(departement);
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Departement", new{ nomCegep});
+            }
+
+        }
     }
 }

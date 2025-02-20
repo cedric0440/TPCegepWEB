@@ -94,5 +94,50 @@ namespace TPCegepWEB.Controllers
 
             return RedirectToAction("Index", "Cegep");
         }
+        /// <summary>
+        /// Action ModifierCegep.
+        /// Permet de modifier un Cégep.
+        /// </summary>
+        /// <param name="cegepDTO">Le Cégep a modifier.</param>
+        /// <returns>ActionResult</returns>
+        [Route("/Cegep/ModifierCegep")]
+        [HttpPost]
+        public IActionResult ModifierCegep([FromForm] CegepDTO cegepDTO)
+        {
+            try
+            {
+                CegepControleur.Instance.ModifierCegep(cegepDTO);
+            }
+            catch (Exception e)
+            {
+                TempData["MessageErreur"] = e.Message;
+                return RedirectToAction("FormulaireModifierCegep", "Cegep", new { nomCegep = cegepDTO.Nom });
+            }
+            //Lancement de l'action Index...
+            return RedirectToAction("Index", "Cegep");
+        }
+
+        /// <summary>
+        /// Action FormulaireModifierCegep.
+        /// Permet d'afficher le formulaire pour la modification d'un Cégep.
+        /// </summary>
+        /// <param name="nomCegep">Nom du Cégep.</param>
+        /// <returns>IActionResult</returns>
+        [Route("/Cegep/FormulaireModifierCegep")]
+        [HttpGet]
+        public IActionResult FormulaireModifierCegep([FromQuery] string nomCegep)
+        {
+            try
+            {
+                ViewBag.MessageErreur = TempData["MessageErreur"];
+                CegepDTO cegep = CegepControleur.Instance.ObtenirCegep(nomCegep);
+                return View(cegep);
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Cegep");
+            }
+
+        }
     }
 }

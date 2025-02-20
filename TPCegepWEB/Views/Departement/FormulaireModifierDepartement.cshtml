@@ -1,0 +1,53 @@
+﻿@using GestionCegepWeb.Models
+@model DepartementDTO;
+@*Si erreur du côté serveur... affichage du message d'erreur...*@
+@if (ViewBag.MessageErreur != null)
+{
+    <br />
+    <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+}
+else
+{
+    <br />
+    <h3>Modifier un Département : </h3>
+    <br />
+    <form asp-controller="Departement" asp-action="ModifierDepartement" method="post">
+        <table>
+            <tr>
+                <td>
+                    <label asp-for="Nom" readonly></label>
+                </td>
+                <td>
+                    <input asp-for="Nom" class="inputreadonly" readonly />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="No"></label>
+                </td>
+                <td>
+                    <input asp-for="No"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label asp-for="Description"></label>
+                </td>
+                <td>
+                    <input asp-for="Description" />
+                </td>
+            </tr>
+               <br /> 
+            <tr>
+                <td>
+                    <input type="submit" value="Modifier" />
+                </td>
+                <td>
+                    <input type="button" value="Annuler" onclick="history.back();" />
+                </td>
+            </tr>
+
+        </table>
+        <input type="hidden" name="nomCegep" value="@ViewBag.nomCegep" />
+    </form>
+}
