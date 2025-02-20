@@ -137,7 +137,7 @@ namespace TPCegepWEB.Controllers
         /// Permet d'afficher le formulaire pour la modification d'un Département.
         /// </summary>
         /// <param name="nomCegep">Nom du Cégep.</param>
-        /// <param name="nomDepartement">Nom du Cégep.</param>
+        /// <param name="nomDepartement">Nom du Département.</param>
         /// <returns>IActionResult</returns>
         [Route("/Departement/FormulaireModifierDepartement")]
         [HttpGet]
