@@ -8,8 +8,8 @@ namespace TPCegepWEB.Controllers
 {
     public class EnseignantController : Controller
     {
-        [Route("Enseignants")]
-        [Route("Enseignants/Index")]
+        [Route("Enseignant")]
+        [Route("Enseignant/Index")]
         [HttpGet]
         public IActionResult Index([FromQuery] string nomCegep, [FromQuery] string nomDepartement)
         {
@@ -73,7 +73,7 @@ namespace TPCegepWEB.Controllers
 
 
         [Route("AjouterEnseignant")]
-        [Route("/Enseignants/AjouterEnseignant")]
+        [Route("/Enseignant/AjouterEnseignant")]
         [HttpPost]
         public IActionResult AjouterEnseignant([FromForm] string nomCegep, [FromForm] string nomDepartement, [FromForm] EnseignantDTO enseignantDTO)
         {
@@ -88,7 +88,7 @@ namespace TPCegepWEB.Controllers
             }
 
             //Lancement de l'action Index...
-            return RedirectToAction("Index", "Enseignants", new { nomCegep ,nomDepartement});
+            return RedirectToAction("Index", "Enseignant", new { nomCegep ,nomDepartement});
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace TPCegepWEB.Controllers
         /// <returns>ActionResult</returns>
 
         [Route("SupprimerEnseignant")]
-        [Route("/Enseignants/SupprimerEnseignant")]
+        [Route("/Enseignant/SupprimerEnseignant")]
         [HttpPost]
         public IActionResult SupprimerEnseignant([FromForm] string nomCegep, [FromForm] string nomDepartement, [FromForm] int noEnseignant)
         {
@@ -113,7 +113,7 @@ namespace TPCegepWEB.Controllers
             {
                 ViewBag.MessageErreur = e.Message;
             }
-            return RedirectToAction("Index", "Enseignants", new { nomCegep, nomDepartement});
+            return RedirectToAction("Index", "Enseignant", new { nomCegep, nomDepartement});
         }
 
         /// <summary>
@@ -121,8 +121,8 @@ namespace TPCegepWEB.Controllers
         /// Permet de vider la liste des Enseignant(e)s.
         /// </summary>
         /// <returns>ActionResult</returns>
-        [Route("/Enseignants")]
-        [Route("/Enseignants/ViderListeEnseignant")]
+        [Route("/Enseignant")]
+        [Route("/Enseignant/ViderListeEnseignant")]
         [HttpPost]
         public IActionResult ViderListeEnseignant([FromForm] string nomCegep, [FromForm] string nomDepartement)
         {
@@ -135,7 +135,62 @@ namespace TPCegepWEB.Controllers
                 ViewBag.MessageErreur = e.Message;
             }
 
-            return RedirectToAction("Index", "Enseignants");
+            return RedirectToAction("Index", "Enseignant");
+        }
+
+
+        /// <summary>
+        /// Action ModifierDepartement.
+        /// Permet de modifier un Cégep.
+        /// </summary>
+        /// <param name="nomCegep">Nom du Cégep.</param>
+        /// <param name="nomDepartement">Nom du Departement.</param>
+        /// <param name="enseignantDTO">Le enseignant a modifier.</param>
+        /// <returns>ActionResult</returns>
+        [Route("/Enseignant/ModifierEnseignant")]
+        [HttpPost]
+        public IActionResult ModifierEnseignant([FromForm] string nomCegep, [FromForm] string nomDepartement,[FromForm] EnseignantDTO enseignantDTO)
+        {
+            try
+            {
+                CegepControleur.Instance.ModifierEnseignant(nomCegep, nomDepartement,enseignantDTO);
+            }
+            catch (Exception e)
+            {
+                TempData["MessageErreur"] = e.Message;
+                return RedirectToAction("FormulaireModifierEnseignant", "Enseignant", new { nomCegep, nomDepartement,enseignantDTO });
+
+            }
+            //Lancement de l'action Index...
+            return RedirectToAction("Index", "Enseignant", new { nomCegep,nomDepartement });
+        }
+
+        /// <summary>
+        /// Action FormulaireModifierDepartement.
+        /// Permet d'afficher le formulaire pour la modification d'un Enseignant.
+        /// </summary>
+        /// <param name="nomCegep">Nom du Cégep.</param>
+        /// <param name="nomDepartement">Nom du Département.</param>
+        /// <param name="noEnseignant">No de l'enseignant(e).</param>
+        /// <returns>IActionResult</returns>
+        [Route("/Enseignant/FormulaireModifierEnseignant")]
+        [HttpGet]
+        public IActionResult FormulaireModifierEnseignant([FromQuery] string nomCegep, [FromQuery] string nomDepartement, [FromQuery] int noEnseignant)
+        {
+            try
+            {
+                ViewBag.MessageErreur = TempData["MessageErreur"];
+                EnseignantDTO enseignant = CegepControleur.Instance.ObtenirEnseignant(nomCegep, nomDepartement,noEnseignant);
+                ViewBag.nomCegep = nomCegep;
+                ViewBag.nomDepartement=nomDepartement;
+                ViewBag.noEnseignant = noEnseignant;
+                return View(enseignant);
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Enseignant", new { nomCegep ,nomDepartement});
+            }
+
         }
     }
 }
