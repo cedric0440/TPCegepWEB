@@ -138,7 +138,59 @@ namespace TPCegepWEB.Controllers
             return RedirectToAction("Index", "Enseignants");
         }
 
+        /// <summary>
+        /// Action ModifierCours.
+        /// Permet de modifier un Cégep.
+        /// </summary>
+        /// <param name="nomCegep">Nom du Cégep.</param>
+        /// <param name="nomDepartement">Nom du Departement.</param>
+        /// <param name="coursDTO">Le cours a modifier.</param>
+        /// <returns>ActionResult</returns>
+        [Route("/Cours/ModifierEnseignant")]
+        [HttpPost]
+        public IActionResult ModifierCours([FromForm] string nomCegep, [FromForm] string nomDepartement, [FromForm] CoursDTO coursDTO)
+        {
+            try
+            {
+                CegepControleur.Instance.ModifierCours(nomCegep, nomDepartement, coursDTO);
+            }
+            catch (Exception e)
+            {
+                TempData["MessageErreur"] = e.Message;
+                return RedirectToAction("FormulaireModifierCours", "Cours", new { nomCegep, nomDepartement, coursDTO });
 
+            }
+            //Lancement de l'action Index...
+            return RedirectToAction("Index", "Cours", new { nomCegep, nomDepartement });
+        }
+
+        /// <summary>
+        /// Action FormulaireModifierCours.
+        /// Permet d'afficher le formulaire pour la modification d'un cours.
+        /// </summary>
+        /// <param name="nomCegep">Nom du Cégep.</param>
+        /// <param name="nomDepartement">Nom du Département.</param>
+        /// <param name="nomCours">Nom du cours.</param>
+        /// <returns>IActionResult</returns>
+        [Route("/Cours/FormulaireModifierCours")]
+        [HttpGet]
+        public IActionResult FormulaireModifierCours([FromQuery] string nomCegep, [FromQuery] string nomDepartement, [FromQuery] string nomCours)
+        {
+            try
+            {
+                ViewBag.MessageErreur = TempData["MessageErreur"];
+                CoursDTO cours = CegepControleur.Instance.ObtenirCours(nomCegep, nomDepartement, nomCours);
+                ViewBag.nomCegep = nomCegep;
+                ViewBag.nomDepartement = nomDepartement;
+                ViewBag.nomCours = nomCours ;
+                return View(cours);
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Cours", new { nomCegep, nomDepartement });
+            }
+
+        }
 
     }
 }

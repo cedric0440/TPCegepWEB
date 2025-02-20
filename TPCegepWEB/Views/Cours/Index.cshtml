@@ -60,6 +60,7 @@ else
                 <td>@cours.No</td>
                 <td>@cours.Nom</td>
                 <td>@cours.Description</td>
+                    <td><input value="Modifier" onclick="document.getElementById('nomCours').value ='@cours.Nom'; this.form.action='/Cours/FormulaireModifierCours'; this.form.method='get'; submit();" type="button" /></td>
                 <td><input value="  Supprimer   " onclick="if (confirm('Voulez-vous vraiment supprimer le cours: @cours.Nom ?')) { document.getElementById('nomCours').value = '@cours.Nom'; this.form.action = '/Cours/SupprimerCours'; this.form.method = 'post'; submit(); }" type="button" /></td>    
             
             </tr>
