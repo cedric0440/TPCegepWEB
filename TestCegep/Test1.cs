@@ -389,6 +389,89 @@ namespace TPCegepWEB
             Assert.IsTrue(cours.Exists(c => c.No == coursDTO.No), "Le cours NE doit  PAS exister pour ce cégep.");
         }
 
+        [TestMethod]
+        public void Test_BCegep_BDepar_BCours_ModifierCours()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple 3";
+            string nomDepartement = "Loisir";
+
+            // Créer d'abord un cours à modifier
+            CoursDTO coursInitial = new CoursDTO { No = "1", Nom = "Informatique", Description = "informatique" };
+            CoursController controller = new CoursController();
+            controller.AjouterCours(nomCegep, nomDepartement, coursInitial);
+
+            // Préparer les données modifiées
+            CoursDTO coursModifie = new CoursDTO { No = "350", Nom = "Informatique", Description = "Programmation avancé" };
+
+            // Act
+            RedirectToActionResult modifResult = (RedirectToActionResult)controller.ModifierCours(nomCegep, nomDepartement, coursModifie);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep, nomDepartement);
+            List<CoursDTO> cours = (List<CoursDTO>)indexResult.ViewData["ListeCours"];
+
+            // Assert
+            Assert.IsNotNull(cours, "La liste des cours ne doit pas être null.");
+            Assert.IsTrue(cours.Exists(c => c.No == coursModifie.No &&  c.Nom == coursModifie.Nom && c.Description == coursModifie.Description), "Le cours devrait exister avec les nouvelles valeurs.");
+            Assert.IsFalse(cours.Exists(c => c.No == coursInitial.No && c.Nom == coursInitial.Nom &&c.Description == coursInitial.Description),"L'ancienne version du cours ne devrait plus exister.");
+        }
+
+        [TestMethod]
+        public void Test_BCegep_BDepar_BEnseignant_ModifierEnseignant()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple 3";
+            string nomDepartement = "Loisir";
+
+            // Créer d'abord un enseignant à modifier
+            EnseignantDTO enseignantInitial = new EnseignantDTO  { NoEmploye = 1005,Nom = "WW",Prenom = "WW",Adresse = "WW",Ville = "WW", Province = "WW", CodePostal = "WW",Telephone = "WW",  Courriel = "WW"  };
+
+            EnseignantController controller = new EnseignantController();
+            controller.AjouterEnseignant(nomCegep, nomDepartement, enseignantInitial);
+
+            // Préparer les données modifiées
+            EnseignantDTO enseignantModifie = new EnseignantDTO  {NoEmploye = 1005, Nom = "Dubois", Prenom = "Jean",Adresse = "123 rue Principale",Ville = "Montréal",Province = "Québec",CodePostal = "H1H1H1",Telephone = "514-555-1234", Courriel = "jean.dubois@example.com"
+            };
+
+            // Act
+            RedirectToActionResult modifResult = (RedirectToActionResult)controller.ModifierEnseignant(nomCegep, nomDepartement, enseignantModifie);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep, nomDepartement);
+            List<EnseignantDTO> enseignants = (List<EnseignantDTO>)indexResult.ViewData["ListeEnseignants"];
+
+            // Assert
+            Assert.IsNotNull(enseignants, "La liste des enseignants ne doit pas être null.");
+            Assert.IsTrue(enseignants.Exists(e =>e.NoEmploye == enseignantModifie.NoEmploye && e.Nom == enseignantModifie.Nom &&e.Prenom == enseignantModifie.Prenom &&e.Adresse == enseignantModifie.Adresse && e.Ville == enseignantModifie.Ville &&e.Province == enseignantModifie.Province &&e.CodePostal == enseignantModifie.CodePostal &&
+                e.Telephone == enseignantModifie.Telephone &&   e.Courriel == enseignantModifie.Courriel), "L'enseignant devrait exister avec les nouvelles valeurs.");
+
+            Assert.IsFalse(enseignants.Exists(e =>e.NoEmploye == enseignantInitial.NoEmploye &&e.Nom == enseignantInitial.Nom &&e.Prenom == enseignantInitial.Prenom &&e.Adresse == enseignantInitial.Adresse && e.Ville == enseignantInitial.Ville &&e.Province == enseignantInitial.Province &&
+                e.CodePostal == enseignantInitial.CodePostal && e.Telephone == enseignantInitial.Telephone && e.Courriel == enseignantInitial.Courriel), "L'ancienne version de l'enseignant ne devrait plus exister.");
+        }
+
+        [TestMethod]
+        public void Test_BCegep_BDepart_ModifierDepartement()
+        {
+            // Arrange
+            string nomCegep = "Cegep Exemple 1";
+
+            // Créer d'abord un département à modifier
+            DepartementDTO departementInitial = new DepartementDTO  {No = "1", Nom = "Informatique",Description = "Département dédié à l'informatique"};
+
+            DepartementController controller = new DepartementController();
+            controller.AjouterDepartement(nomCegep, departementInitial);
+
+            // Préparer les données modifiées
+            DepartementDTO departementModifie = new DepartementDTO { No = "605", Nom = "Informatique", Description = "Web Dynamique" };
+            // Act
+            RedirectToActionResult modifResult = (RedirectToActionResult)controller.ModifierDepartement(nomCegep, departementModifie);
+            ViewResult indexResult = (ViewResult)controller.Index(nomCegep);
+            List<DepartementDTO> departements = (List<DepartementDTO>)indexResult.ViewData["ListeDepartements"];
+
+            // Assert
+            Assert.IsNotNull(departements, "La liste des départements ne doit pas être null.");
+            Assert.IsTrue(departements.Exists(d => d.No == departementModifie.No &&d.Nom == departementModifie.Nom && d.Description == departementModifie.Description), "Le département devrait exister avec les nouvelles valeurs.");
+
+            Assert.IsFalse(departements.Exists(d => d.No == departementInitial.No && d.Nom == departementInitial.Nom && d.Description == departementInitial.Description), "L'ancienne version du département ne devrait plus exister.");
+        }
+
     }
 
 }

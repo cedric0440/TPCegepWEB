@@ -6,8 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TPCegepWEB.Controllers
 {
+    /// <summary>
+    /// classe controller
+    /// </summary>
     public class DepartementController : Controller
     {
+        /// <summary>
+        /// index du département
+        /// retourne la vue du département
+        /// </summary>
+        /// <param name="nomCegep"></param>
+        /// <returns></returns>
         [Route("Departement")]
         [Route("Departement/Index")]
         [HttpGet]
@@ -42,6 +51,13 @@ namespace TPCegepWEB.Controllers
             }
         }
 
+        /// <summary>
+        /// / Action AjouterDepartement.
+        /// Permet de Ajjouter un département.
+        /// </summary>
+        /// <param name="nomCegep"></param>
+        /// <param name="departementDTO"></param>
+        /// <returns></returns>
         [Route("AjouterDepartement")]
         [Route("/Departement/AjouterDepartement")]
         [HttpPost]
@@ -64,7 +80,7 @@ namespace TPCegepWEB.Controllers
 
         /// <summary>
         /// Action SupprimerDepartement.
-        /// Permet de supprimer un Cégep.
+        /// Permet de supprimer un département.
         /// </summary>
         /// <param name="nomCegep">Le nom du Cégep.</param>
         /// <param name="nomDepartement">Le nom du Département.</param>
@@ -90,7 +106,8 @@ namespace TPCegepWEB.Controllers
         /// Action ViderListeDepartement.
         /// Permet de vider la liste des Départements.
         /// </summary>
-        /// <returns>ActionResult</returns>
+        /// <param name="nomCegep"></param>
+        /// <returns></returns>
         [Route("/Departement/ViderListeDepartement")]
         [HttpPost]
         public IActionResult ViderListeDepartement([FromForm] string nomCegep)

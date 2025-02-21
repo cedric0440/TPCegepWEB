@@ -6,8 +6,18 @@ using System.Collections.Generic;
 
 namespace TPCegepWEB.Controllers
 {
+    /// <summary>
+    /// classe controller
+    /// </summary>
     public class CoursController : Controller
     {
+        /// <summary>
+        /// index du cours
+        /// retourne la vue du cours
+        /// </summary>
+        /// <param name="nomCegep"></param>
+        /// <param name="nomDepartement"></param>
+        /// <returns></returns>
         [Route("Cours")]
         [Route("Cours/Index")]
         [HttpGet]
@@ -71,6 +81,14 @@ namespace TPCegepWEB.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Action AjouterCours.
+        /// Permet de Ajouter un Cours.
+        /// </summary>
+        /// <param name="nomCegep"></param>
+        /// <param name="nomDepartement"></param>
+        /// <param name="coursDTO"></param>
+        /// <returns></returns>
         [Route("AjouterCours")]
         [Route("/Cours/AjouterCours")]
         [HttpPost]
@@ -118,9 +136,11 @@ namespace TPCegepWEB.Controllers
 
         /// <summary>
         /// Action ViderListeCours.
-        /// Permet de vider la liste des Cours.
+        /// Permet de Vider la liste d'un Cours.
         /// </summary>
-        /// <returns>ActionResult</returns>
+        /// <param name="nomCegep"></param>
+        /// <param name="nomDepartement"></param>
+        /// <returns></returns>
         [Route("/Cours")]
         [Route("/Cours/ViderListeCours")]
         [HttpPost]
@@ -156,7 +176,7 @@ namespace TPCegepWEB.Controllers
             }
             catch (Exception e)
             {
-                TempData["MessageErreur"] = e.Message;
+                //TempData["MessageErreur"] = e.Message;
                 return RedirectToAction("FormulaireModifierCours", "Cours", new { nomCegep, nomDepartement, coursDTO });
 
             }

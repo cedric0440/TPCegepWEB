@@ -9,8 +9,16 @@ using Xunit;
 
 namespace TPCegepWEB.Controllers
 {
+    /// <summary>
+    /// classe controller
+    /// </summary>
     public class CegepController : Controller
     {
+        /// <summary>
+        /// index du cegep
+        /// retourne la vue 
+        /// </summary>
+        /// <returns></returns>
         [Route("")]
         [Route("Cegeps")]
         [Route("Cegeps/Index")]
@@ -32,6 +40,12 @@ namespace TPCegepWEB.Controllers
             }
         }
 
+        /// <summary>
+        /// Action AjouterCegep.
+        /// Permet de Ajouter un Cégep.
+        /// </summary>
+        /// <param name="cegepDTO"></param>
+        /// <returns></returns>
         [Route("AjouterCegep")]
         [Route("/Cegep/AjouterCegep")]
         [HttpPost]

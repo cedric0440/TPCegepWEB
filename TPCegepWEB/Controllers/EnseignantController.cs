@@ -6,8 +6,18 @@ using System.Collections.Generic;
 
 namespace TPCegepWEB.Controllers
 {
+    /// <summary>
+    /// classe Controller
+    /// </summary>
     public class EnseignantController : Controller
     {
+        /// <summary>
+        /// index de l'enseignant(e)
+        /// retourne la vue de l'enseignant(e)
+        /// </summary>
+        /// <param name="nomCegep"></param>
+        /// <param name="nomDepartement"></param>
+        /// <returns></returns>
         [Route("Enseignant")]
         [Route("Enseignant/Index")]
         [HttpGet]
@@ -72,6 +82,14 @@ namespace TPCegepWEB.Controllers
         }
 
 
+        /// <summary>
+        /// Action AjouterEnseignant.
+        /// Permet d.Ajouter un enseignant(e).
+        /// </summary>
+        /// <param name="nomCegep"></param>
+        /// <param name="nomDepartement"></param>
+        /// <param name="enseignantDTO"></param>
+        /// <returns></returns>
         [Route("AjouterEnseignant")]
         [Route("/Enseignant/AjouterEnseignant")]
         [HttpPost]
@@ -93,7 +111,7 @@ namespace TPCegepWEB.Controllers
 
         /// <summary>
         /// Action SupprimerEnseignant.
-        /// Permet de supprimer un Enseignant(e)s.
+        /// Permet de supprimer un Enseignant(e).
         /// </summary>
         /// <param name="nomCegep">Le nom du Cégep.</param>
         /// <param name="nomDepartement">Le nom du Département.</param>
@@ -117,10 +135,12 @@ namespace TPCegepWEB.Controllers
         }
 
         /// <summary>
-        /// Action ViderListeEnseignant.
-        /// Permet de vider la liste des Enseignant(e)s.
+        ///  /// Action ViderListeEnseignant.
+        /// Permet de vider la liste des Enseignant(e)
         /// </summary>
-        /// <returns>ActionResult</returns>
+        /// <param name="nomCegep"></param>
+        /// <param name="nomDepartement"></param>
+        /// <returns></returns>
         [Route("/Enseignant")]
         [Route("/Enseignant/ViderListeEnseignant")]
         [HttpPost]
